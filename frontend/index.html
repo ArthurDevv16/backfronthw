@@ -483,7 +483,7 @@
         $('#weather-city').textContent = `${data.name}, ${data.sys && data.sys.country ? data.sys.country : ''}`;
         $('#weather-desc').textContent = `${data.weather && data.weather[0] ? data.weather[0].description : ''}`;
         $('#weather-temp').textContent = `${Math.round(data.main.temp)}°C`;
-        $('#weather-extra').textContent = `Vento ${Math.round(data.wind.speed)} m/s • Humidade ${data.main.humidity}%`;
+        $('#weather-extra').textContent = `Vento ${Math.round(data.wind.speed)} m/s • Umidade ${data.main.humidity}%`;
       }catch(err){ console.error(err); $('#weather-city').textContent = 'Erro'; $('#weather-desc').textContent = 'Não foi possível obter o clima'; }
     }
 

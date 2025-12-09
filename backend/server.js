@@ -123,7 +123,8 @@ app.post('/api/auth/login', async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
 
-  if (!user) return res.status(401).json({ message: 'Usuário não encontrado' });
+  if (!user)
+    return res.status(401).json({ message: 'Usuário não encontrado' });
 
   const token = jwt.sign(
     { id: user._id },
@@ -135,7 +136,7 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 /* =====================================
-   USER
+   USER LOGADO
 ===================================== */
 app.get('/api/me', async (req, res) => {
   try {
@@ -149,7 +150,19 @@ app.get('/api/me', async (req, res) => {
 });
 
 /* =====================================
-   ✅ OPENWEATHER (FUNCIONANDO)
+   ✅ LISTA DE USUÁRIOS (NOVA ROTA)
+===================================== */
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = await User.find().select('-__v');
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar usuários' });
+  }
+});
+
+/* =====================================
+   ✅ OPENWEATHER
 ===================================== */
 app.get('/api/weather/:city', async (req, res) => {
   try {
@@ -177,7 +190,7 @@ app.get('/api/weather/:city', async (req, res) => {
 });
 
 /* =====================================
-   START SERVER (RENDER)
+   START SERVER
 ===================================== */
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () =>
